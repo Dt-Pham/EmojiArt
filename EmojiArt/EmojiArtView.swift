@@ -1,13 +1,13 @@
 //
-//  EmojiArt.swift
-//  EmojiArt
+//  EmojiArtView.swift
+//  EmojiArtView
 //
 //  Created by Duong Pham on 1/11/21.
 //
 
 import SwiftUI
 
-struct EmojiArt: View {
+struct EmojiArtView: View {
     var body: some View {
         Text("Hello, world!")
             .padding()

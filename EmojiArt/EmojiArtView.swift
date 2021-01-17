@@ -11,15 +11,20 @@ struct EmojiArtView: View {
     @ObservedObject var document: EmojiArtDocument
     
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(EmojiArtDocument.palette.map{ String($0) }, id: \.self) { emoji in
-                    Text(emoji)
-                        .font(Font.system(size: defaultEmojiSize))
-                        .onDrag {
-                            NSItemProvider(object: emoji as NSString)
-                        }
+        HStack {
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(EmojiArtDocument.palette.map{ String($0) }, id: \.self) { emoji in
+                        Text(emoji)
+                            .font(Font.system(size: defaultEmojiSize))
+                            .onDrag {
+                                NSItemProvider(object: emoji as NSString)
+                            }
+                    }
                 }
+            }
+            Button("Reset") {
+                document.removeAllEmojis()
             }
         }
         .padding()

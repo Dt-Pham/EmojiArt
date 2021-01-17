@@ -34,7 +34,7 @@ struct EmojiArtView: View {
                     .gesture(doubleTapToZoom(in: geometry.size))
                 ForEach(document.emojis) { emoji in
                     Text(emoji.text)
-                        .font(self.font(for: emoji))
+                        .font(animatableWithSize: zoomScale * defaultEmojiSize)
                         .position(self.position(for: emoji, in: geometry.size))
                 }
             }
@@ -73,13 +73,9 @@ struct EmojiArtView: View {
             }
     }
     
-    private func font(for emoji: EmojiArt.Emoji) -> Font {
-        Font.system(size: CGFloat(emoji.size))
-    }
-    
     private func position(for emoji: EmojiArt.Emoji, in size: CGSize) -> CGPoint {
-        CGPoint(x: CGFloat(emoji.x) + size.width / 2,
-                y: CGFloat(emoji.y) + size.height / 2)
+        CGPoint(x: CGFloat(emoji.x) * zoomScale + size.width / 2,
+                y: CGFloat(emoji.y) * zoomScale + size.height / 2)
     }
     
     private func drop(providers: [NSItemProvider], at location: CGPoint) -> Bool {

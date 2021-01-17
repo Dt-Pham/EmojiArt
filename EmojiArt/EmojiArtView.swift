@@ -22,13 +22,16 @@ struct EmojiArtView: View {
                 }
             }
         }
-        .padding(5)
-        
+        .padding()
         GeometryReader { geometry in
             ZStack {
                 Rectangle()
-                    .foregroundColor(.white)
-                    .overlay(OptionalImage(image: document.backgroundImage))
+                    .foregroundColor(.yellow)
+                    .overlay(
+                        OptionalImage(image: document.backgroundImage)
+                            .scaleEffect(zoomScale)
+                    )
+                    .gesture(doubleTapToZoom(in: geometry.size))
                 ForEach(document.emojis) { emoji in
                     Text(emoji.text)
                         .font(self.font(for: emoji))
@@ -41,9 +44,33 @@ struct EmojiArtView: View {
                 var location = geometry.convert(location, from: .global)
                 location = CGPoint(x: location.x - geometry.size.width / 2,
                                    y: location.y - geometry.size.height / 2)
+                location = location / zoomScale
                 return self.drop(providers: providers, at: location)
             }
         }
+    }
+    
+    // MARK: - Zoom to fit
+    @State private var steadyStateZoomScale: CGFloat = 1.0
+    @GestureState private var gestureZoomScale: CGFloat = 1.0
+    
+    private var zoomScale: CGFloat { steadyStateZoomScale * gestureZoomScale }
+    
+    private func zoomToFit(_ image: UIImage?, in size: CGSize) {
+        if let image = image, image.size.width > 0, image.size.height > 0 {
+            let hZoom = size.width / image.size.width
+            let vZoom = size.height / image.size.height
+            steadyStateZoomScale = min(hZoom, vZoom)
+        }
+    }
+    
+    private func doubleTapToZoom(in size: CGSize) -> some Gesture {
+        TapGesture(count: 2)
+            .onEnded {
+                withAnimation {
+                    zoomToFit(document.backgroundImage, in: size)
+                }
+            }
     }
     
     private func font(for emoji: EmojiArt.Emoji) -> Font {

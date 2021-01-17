@@ -38,16 +38,16 @@ struct EmojiArtView: View {
                             .offset(panOffset)
                     )
                     .gesture(doubleTapToZoom(in: geometry.size))
+                    .onTapGesture {
+                        document.deselectAllEmojis()
+                    }
+                    
                 ForEach(document.emojis) { emoji in
                     EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
                         .font(animatableWithSize: zoomScale * defaultEmojiSize)
                         .position(self.position(for: emoji, in: geometry.size))
                         .onTapGesture {
                             document.toggleEmoji(emoji)
-                            print("toggled")
-                            print(emoji)
-                            print(document.isSelected(emoji: emoji))
-                            print()
                         }
                 }
             }

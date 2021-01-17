@@ -47,10 +47,11 @@ struct EmojiArtView: View {
                 location = location / zoomScale
                 return self.drop(providers: providers, at: location)
             }
+            .gesture(zoomGesture())
         }
     }
     
-    // MARK: - Zoom to fit
+    // MARK: - Zoom gestures
     @State private var steadyStateZoomScale: CGFloat = 1.0
     @GestureState private var gestureZoomScale: CGFloat = 1.0
     
@@ -73,6 +74,17 @@ struct EmojiArtView: View {
             }
     }
     
+    private func zoomGesture() -> some Gesture {
+        MagnificationGesture()
+            .updating($gestureZoomScale) { latestGestureScale, gestureZoomScale, transaction in
+                gestureZoomScale = latestGestureScale
+            }
+            .onEnded { finalGestureScale in
+                steadyStateZoomScale *= finalGestureScale
+            }
+    }
+    
+    // MARK: - Helper functions
     private func position(for emoji: EmojiArt.Emoji, in size: CGSize) -> CGPoint {
         CGPoint(x: CGFloat(emoji.x) * zoomScale + size.width / 2,
                 y: CGFloat(emoji.y) * zoomScale + size.height / 2)
@@ -91,5 +103,6 @@ struct EmojiArtView: View {
         return found
     }
     
+    // MARK: - Drawing constant(s)
     private let defaultEmojiSize: CGFloat = 40
 }

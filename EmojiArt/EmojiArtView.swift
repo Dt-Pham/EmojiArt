@@ -49,6 +49,7 @@ struct EmojiArtView: View {
                         .onTapGesture {
                             document.toggleEmoji(emoji)
                         }
+                        .gesture(movingEmojisGesture())
                 }
             }
             .clipped()
@@ -120,10 +121,27 @@ struct EmojiArtView: View {
             }
     }
     
+    // MARK: - Moving emojis gesture
+    @GestureState private var gestureEmojisOffset: CGSize = .zero
+    
+    private var emojisOffset: CGSize {
+        gestureEmojisOffset * zoomScale
+    }
+    
+    private func movingEmojisGesture() -> some Gesture {
+        DragGesture()
+            .updating($gestureEmojisOffset) { latestEmojisOffset, gestureEmojisOffset, transaction in
+                gestureEmojisOffset = latestEmojisOffset.translation / zoomScale
+            }
+            .onEnded{ finalDragGestureValue in
+                document.moveSelectedEmojis(by: finalDragGestureValue.translation / zoomScale)
+            }
+    }
+    
     // MARK: - Helper functions
     private func position(for emoji: EmojiArt.Emoji, in size: CGSize) -> CGPoint {
-        CGPoint(x: CGFloat(emoji.x) * zoomScale + panOffset.width + size.width / 2,
-                y: CGFloat(emoji.y) * zoomScale + panOffset.height + size.height / 2)
+        CGPoint(x: CGFloat(emoji.x) * zoomScale + emojisOffset.width + panOffset.width + size.width / 2,
+                y: CGFloat(emoji.y) * zoomScale + emojisOffset.height + panOffset.height + size.height / 2)
     }
     
     private func drop(providers: [NSItemProvider], at location: CGPoint) -> Bool {

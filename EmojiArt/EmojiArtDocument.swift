@@ -63,6 +63,12 @@ class EmojiArtDocument: ObservableObject {
         }
     }
     
+    func moveSelectedEmojis(by offset: CGSize) {
+        for emoji in selectedEmojis {
+            moveEmoji(emoji, by: offset)
+        }
+    }
+    
     func scaleEmoji(_ emoji: EmojiArt.Emoji, by scale: CGFloat) {
         if let index = emojiArt.emojis.firstIndex(matching: emoji) {
             emojiArt.emojis[index].size = Int((CGFloat(emojiArt.emojis[index].size) * scale).rounded(.toNearestOrEven))

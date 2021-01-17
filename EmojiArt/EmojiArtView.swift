@@ -22,7 +22,7 @@ struct EmojiArtView: View {
                 }
             }
         }
-        .padding()
+        .padding(5)
         
         GeometryReader { geometry in
             ZStack {

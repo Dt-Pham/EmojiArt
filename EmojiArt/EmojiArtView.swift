@@ -26,7 +26,7 @@ struct EmojiArtView: View {
         GeometryReader { geometry in
             ZStack {
                 Rectangle()
-                    .foregroundColor(.yellow)
+                    .foregroundColor(.white)
                     .overlay(
                         OptionalImage(image: document.backgroundImage)
                             .scaleEffect(zoomScale)

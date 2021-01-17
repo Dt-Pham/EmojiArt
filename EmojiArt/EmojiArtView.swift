@@ -39,9 +39,16 @@ struct EmojiArtView: View {
                     )
                     .gesture(doubleTapToZoom(in: geometry.size))
                 ForEach(document.emojis) { emoji in
-                    Text(emoji.text)
+                    EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
                         .font(animatableWithSize: zoomScale * defaultEmojiSize)
                         .position(self.position(for: emoji, in: geometry.size))
+                        .onTapGesture {
+                            document.toggleEmoji(emoji)
+                            print("toggled")
+                            print(emoji)
+                            print(document.isSelected(emoji: emoji))
+                            print()
+                        }
                 }
             }
             .clipped()
@@ -134,4 +141,19 @@ struct EmojiArtView: View {
     
     // MARK: - Drawing constant(s)
     private let defaultEmojiSize: CGFloat = 40
+}
+
+struct EmojiView: View {
+    var emoji: EmojiArt.Emoji
+    var isSelected: Bool
+    
+    var body: some View {
+        if isSelected {
+            Text(emoji.text)
+                .border(Color.black)
+        }
+        else {
+            Text(emoji.text)
+        }
+    }
 }

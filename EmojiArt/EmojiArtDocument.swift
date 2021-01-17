@@ -18,13 +18,21 @@ class EmojiArtDocument: ObservableObject {
         }
     }
     @Published private(set) var backgroundImage: UIImage?
+    @Published private var selectedEmojis: Set<EmojiArt.Emoji>
     
-    var emojis: [EmojiArt.Emoji] { emojiArt.emojis }
-
     init() {
         emojiArt = EmojiArt(json: UserDefaults.standard.data(forKey: EmojiArtDocument.untitled)) ?? EmojiArt()
+        selectedEmojis = []
         fetchBackgroundImageData()
     }
+    
+    // MARK: - Access
+    var emojis: [EmojiArt.Emoji] { emojiArt.emojis }
+    
+    func isSelected(emoji: EmojiArt.Emoji) -> Bool {
+        selectedEmojis.contains(matching: emoji)
+    }
+    
     
     // MARK: - Intents
     func addEmoji(_ emoji: String, at location: CGPoint, size: CGFloat) {
@@ -33,6 +41,15 @@ class EmojiArtDocument: ObservableObject {
     
     func removeAllEmojis() {
         emojiArt.removeAllEmojis()
+    }
+    
+    func toggleEmoji(_ emoji: EmojiArt.Emoji) {
+        if selectedEmojis.contains(matching: emoji) {
+            selectedEmojis.remove(emoji)
+        }
+        else {
+            selectedEmojis.insert(emoji)
+        }
     }
     
     func moveEmoji(_ emoji: EmojiArt.Emoji, by offset: CGSize) {

@@ -29,6 +29,10 @@ class EmojiArtDocument: ObservableObject {
     // MARK: - Access
     var emojis: [EmojiArt.Emoji] { emojiArt.emojis }
     
+    var numberOfSelectedEmojis: Int {
+        selectedEmojis.count
+    }
+    
     func isSelected(emoji: EmojiArt.Emoji) -> Bool {
         selectedEmojis.contains(matching: emoji)
     }
@@ -45,7 +49,7 @@ class EmojiArtDocument: ObservableObject {
     
     func toggleEmoji(_ emoji: EmojiArt.Emoji) {
         if selectedEmojis.contains(matching: emoji) {
-            selectedEmojis.remove(emoji)
+            selectedEmojis.remove(at: selectedEmojis.firstIndex(matching: emoji)!)
         }
         else {
             selectedEmojis.insert(emoji)
@@ -72,6 +76,12 @@ class EmojiArtDocument: ObservableObject {
     func scaleEmoji(_ emoji: EmojiArt.Emoji, by scale: CGFloat) {
         if let index = emojiArt.emojis.firstIndex(matching: emoji) {
             emojiArt.emojis[index].size = Int((CGFloat(emojiArt.emojis[index].size) * scale).rounded(.toNearestOrEven))
+        }
+    }
+    
+    func scaleSelectedEmojis(by scale: CGFloat) {
+        for emoji in selectedEmojis {
+            scaleEmoji(emoji, by: scale)
         }
     }
     

@@ -44,12 +44,15 @@ struct EmojiArtView: View {
                     
                 ForEach(document.emojis) { emoji in
                     EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
-                        .font(animatableWithSize: zoomScale * defaultEmojiSize)
+                        .font(animatableWithSize: fontSize(for: emoji))
                         .position(self.position(for: emoji, in: geometry.size))
+                        .gesture(movingEmojisGesture())
                         .onTapGesture {
                             document.toggleEmoji(emoji)
+                            print("toggled \(emoji)")
+                            print("selected = \(document.isSelected(emoji: emoji))")
+                            print()
                         }
-                        .gesture(movingEmojisGesture())
                 }
             }
             .clipped()
@@ -72,7 +75,16 @@ struct EmojiArtView: View {
     @GestureState private var gestureZoomScale: CGFloat = 1.0
     
     private var zoomScale: CGFloat {
-        steadyStateZoomScale * gestureZoomScale
+        if document.numberOfSelectedEmojis == 0 {
+            return steadyStateZoomScale * gestureZoomScale
+        }
+        else {
+            return steadyStateZoomScale
+        }
+    }
+    
+    private var emojisZoomScale: CGFloat {
+        gestureZoomScale
     }
     
     private func zoomToFit(_ image: UIImage?, in size: CGSize) {
@@ -99,7 +111,14 @@ struct EmojiArtView: View {
                 gestureZoomScale = latestGestureScale
             }
             .onEnded { finalGestureScale in
-                steadyStateZoomScale *= finalGestureScale
+                if document.numberOfSelectedEmojis == 0 {
+                    steadyStateZoomScale *= finalGestureScale
+                }
+                else {
+                    document.scaleSelectedEmojis(by: finalGestureScale)
+                    print("scale = \(finalGestureScale)")
+                    print()
+                }
             }
     }
     
@@ -140,8 +159,22 @@ struct EmojiArtView: View {
     
     // MARK: - Helper functions
     private func position(for emoji: EmojiArt.Emoji, in size: CGSize) -> CGPoint {
-        CGPoint(x: CGFloat(emoji.x) * zoomScale + emojisOffset.width + panOffset.width + size.width / 2,
-                y: CGFloat(emoji.y) * zoomScale + emojisOffset.height + panOffset.height + size.height / 2)
+        var result = CGPoint(x: CGFloat(emoji.x) * zoomScale + panOffset.width + size.width / 2,
+                             y: CGFloat(emoji.y) * zoomScale + panOffset.height + size.height / 2)
+        if document.isSelected(emoji: emoji) {
+            result = CGPoint(x: result.x + emojisOffset.width,
+                             y: result.y + emojisOffset.height)
+        }
+        return result
+    }
+    
+    private func fontSize(for emoji: EmojiArt.Emoji) -> CGFloat {
+        if !document.isSelected(emoji: emoji) {
+            return CGFloat(emoji.size) * zoomScale
+        }
+        else {
+            return CGFloat(emoji.size) * zoomScale * emojisZoomScale
+        }
     }
     
     private func drop(providers: [NSItemProvider], at location: CGPoint) -> Bool {

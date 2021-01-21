@@ -48,13 +48,24 @@ struct EmojiArtView: View {
                 
                 // emojis on screen
                 ForEach(document.emojis) { emoji in
-                    EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
-                        .font(animatableWithSize: fontSize(for: emoji))
-                        .position(self.position(for: emoji, in: geometry.size))
-                        .gesture(movingEmojisGesture())
-                        .onTapGesture {
-                            document.toggleEmoji(emoji)
-                        }
+                    if document.isSelected(emoji: emoji) {
+                        EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
+                            .font(animatableWithSize: fontSize(for: emoji))
+                            .position(self.position(for: emoji, in: geometry.size))
+                            .gesture(movingEmojisGesture())
+                            .onTapGesture {
+                                document.toggleEmoji(emoji)
+                            }
+                    }
+                    else {
+                        EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
+                            .font(animatableWithSize: fontSize(for: emoji))
+                            .position(self.position(for: emoji, in: geometry.size))
+                            .gesture(movingUnselectedEmojiGesture(emoji: emoji))
+                            .onTapGesture {
+                                document.toggleEmoji(emoji)
+                            }
+                    }
                 }
             }
             .clipped()
@@ -150,6 +161,16 @@ struct EmojiArtView: View {
             }
             .onEnded{ finalDragGestureValue in
                 document.moveSelectedEmojis(by: finalDragGestureValue.translation / zoomScale)
+            }
+    }
+    
+    private func movingUnselectedEmojiGesture(emoji: EmojiArt.Emoji) -> some Gesture {
+        DragGesture()
+            .updating($gestureEmojisOffset) { latestEmojisOffset, gestureEmojisOffset, transaction in
+                gestureEmojisOffset = latestEmojisOffset.translation / zoomScale
+            }
+            .onEnded{ finalDragGestureValue in
+                document.moveEmoji(emoji, by: finalDragGestureValue.translation / zoomScale)
             }
     }
     

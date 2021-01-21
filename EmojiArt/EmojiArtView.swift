@@ -79,6 +79,10 @@ struct EmojiArtView: View {
             .gesture(panGesture())
             .gesture(zoomGesture())
             .ignoresSafeArea(edges: [.bottom, .horizontal])
+            .onReceive(document.$backgroundImage) { image in
+                zoomToFit(image, in: geometry.size)
+                
+            }
             .onDrop(of: ["public.Image", "public.Text"], isTargeted: nil) { providers, location in
                 var location = geometry.convert(location, from: .global)
                 location = location - panOffset

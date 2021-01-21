@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 
 class EmojiArtDocument: ObservableObject {
-    static var palette = "😁🙃😏😭😢😳😩😎😟"
     static private let untitled = "EmojiArtDocument.Untilted"
     
     @Published private var emojiArt = EmojiArt()

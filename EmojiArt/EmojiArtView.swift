@@ -9,13 +9,18 @@ import SwiftUI
 
 struct EmojiArtView: View {
     @ObservedObject var document: EmojiArtDocument
+    @State private var chosenPalette: String = ""
     
     var body: some View {
         // emoij palette
         HStack {
+            PaletteChooser(document: document, chosenPalette: $chosenPalette)
+                .onAppear {
+                    chosenPalette = document.defaultPalette
+                }
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(EmojiArtDocument.palette.map{ String($0) }, id: \.self) { emoji in
+                    ForEach(chosenPalette.map{ String($0) }, id: \.self) { emoji in
                         Text(emoji)
                             .font(Font.system(size: defaultEmojiSize))
                             .onDrag {

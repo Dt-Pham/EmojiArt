@@ -28,6 +28,15 @@ class EmojiArtDocument: ObservableObject {
     
     // MARK: - Access
     var emojis: [EmojiArt.Emoji] { emojiArt.emojis }
+    var backgroundURL: URL? {
+        get {
+            emojiArt.backgroundURL
+        }
+        set {
+            emojiArt.backgroundURL = newValue?.imageURL
+            fetchBackgroundImageData()
+        }
+    }
     
     var numberOfSelectedEmojis: Int {
         selectedEmojis.count
@@ -83,11 +92,6 @@ class EmojiArtDocument: ObservableObject {
         for emoji in selectedEmojis {
             scaleEmoji(emoji, by: scale)
         }
-    }
-    
-    func setBackgroundURL(_ url: URL?) {
-        emojiArt.backgroundURL = url?.imageURL
-        fetchBackgroundImageData()
     }
     
     func fetchBackgroundImageData() {

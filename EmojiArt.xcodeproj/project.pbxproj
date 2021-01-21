@@ -16,6 +16,7 @@
 		C60D5B5F25ACE05300CF33EF /* EmojiArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D5B5E25ACE05300CF33EF /* EmojiArtDocument.swift */; };
 		C61027EF25B3C492005B3D51 /* AnimatableSystemFontModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61027EE25B3C492005B3D51 /* AnimatableSystemFontModifier.swift */; };
 		C616B6B225B37D8200A7B6D7 /* OptionalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C616B6B125B37D8200A7B6D7 /* OptionalImageView.swift */; };
+		C66DC66025B91FC0000E6617 /* Spinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66DC65F25B91FC0000E6617 /* Spinning.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		C60D5B5E25ACE05300CF33EF /* EmojiArtDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocument.swift; sourceTree = "<group>"; };
 		C61027EE25B3C492005B3D51 /* AnimatableSystemFontModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatableSystemFontModifier.swift; sourceTree = "<group>"; };
 		C616B6B125B37D8200A7B6D7 /* OptionalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImageView.swift; sourceTree = "<group>"; };
+		C66DC65F25B91FC0000E6617 /* Spinning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinning.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				C60D5B5825ACDDA400CF33EF /* EmojiArtExtensions.swift */,
 				C60D5B4625ACDBCB00CF33EF /* EmojiArtApp.swift */,
 				C60D5B4825ACDBCB00CF33EF /* EmojiArtView.swift */,
+				C66DC65F25B91FC0000E6617 /* Spinning.swift */,
 				C60D5B5B25ACDE6600CF33EF /* EmojiArt.swift */,
 				C60D5B5E25ACE05300CF33EF /* EmojiArtDocument.swift */,
 				C61027EE25B3C492005B3D51 /* AnimatableSystemFontModifier.swift */,
@@ -160,6 +163,7 @@
 				C60D5B4725ACDBCB00CF33EF /* EmojiArtApp.swift in Sources */,
 				C616B6B225B37D8200A7B6D7 /* OptionalImageView.swift in Sources */,
 				C60D5B5925ACDDA400CF33EF /* EmojiArtExtensions.swift in Sources */,
+				C66DC66025B91FC0000E6617 /* Spinning.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

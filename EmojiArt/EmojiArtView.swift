@@ -47,24 +47,31 @@ struct EmojiArtView: View {
                     }
                 
                 // emojis on screen
-                ForEach(document.emojis) { emoji in
-                    if document.isSelected(emoji: emoji) {
-                        EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
-                            .font(animatableWithSize: fontSize(for: emoji))
-                            .position(self.position(for: emoji, in: geometry.size))
-                            .gesture(movingEmojisGesture())
-                            .onTapGesture {
-                                document.toggleEmoji(emoji)
-                            }
-                    }
-                    else {
-                        EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
-                            .font(animatableWithSize: fontSize(for: emoji))
-                            .position(self.position(for: emoji, in: geometry.size))
-                            .gesture(movingUnselectedEmojiGesture(emoji: emoji))
-                            .onTapGesture {
-                                document.toggleEmoji(emoji)
-                            }
+                if isLoading {
+                    Image(systemName: "hourglass")
+                        .imageScale(.large)
+                        .spinning()
+                }
+                else {
+                    ForEach(document.emojis) { emoji in
+                        if document.isSelected(emoji: emoji) {
+                            EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
+                                .font(animatableWithSize: fontSize(for: emoji))
+                                .position(self.position(for: emoji, in: geometry.size))
+                                .gesture(movingEmojisGesture())
+                                .onTapGesture {
+                                    document.toggleEmoji(emoji)
+                                }
+                        }
+                        else {
+                            EmojiView(emoji: emoji, isSelected: document.isSelected(emoji: emoji))
+                                .font(animatableWithSize: fontSize(for: emoji))
+                                .position(self.position(for: emoji, in: geometry.size))
+                                .gesture(movingUnselectedEmojiGesture(emoji: emoji))
+                                .onTapGesture {
+                                    document.toggleEmoji(emoji)
+                                }
+                        }
                     }
                 }
             }
@@ -81,6 +88,10 @@ struct EmojiArtView: View {
                 return self.drop(providers: providers, at: location)
             }
         }
+    }
+    
+    var isLoading: Bool {
+        document.backgroundURL != nil && document.backgroundImage == nil
     }
     
     // MARK: - Zoom gestures
@@ -200,7 +211,7 @@ struct EmojiArtView: View {
     private func drop(providers: [NSItemProvider], at location: CGPoint) -> Bool {
         var found = providers.loadFirstObject(ofType: URL.self) { url in
             print("droped \(url)")
-            self.document.setBackgroundURL(url)
+            self.document.backgroundURL = url
         }
         if !found {
             found = providers.loadObjects(ofType: String.self) { string in

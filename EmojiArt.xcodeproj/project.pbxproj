@@ -19,6 +19,8 @@
 		C66DC66025B91FC0000E6617 /* Spinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66DC65F25B91FC0000E6617 /* Spinning.swift */; };
 		C66DC66B25BA16E3000E6617 /* PaletteChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66DC66A25BA16E3000E6617 /* PaletteChooser.swift */; };
 		C66DC66E25BA1710000E6617 /* EmojiArtDocumentPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66DC66D25BA1710000E6617 /* EmojiArtDocumentPalette.swift */; };
+		C69B2D7725BCF93C00B726DC /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B2D7525BCF93C00B726DC /* GridLayout.swift */; };
+		C69B2D7825BCF93C00B726DC /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B2D7625BCF93C00B726DC /* Grid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		C66DC65F25B91FC0000E6617 /* Spinning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinning.swift; sourceTree = "<group>"; };
 		C66DC66A25BA16E3000E6617 /* PaletteChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteChooser.swift; sourceTree = "<group>"; };
 		C66DC66D25BA1710000E6617 /* EmojiArtDocumentPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiArtDocumentPalette.swift; sourceTree = "<group>"; };
+		C69B2D7525BCF93C00B726DC /* GridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
+		C69B2D7625BCF93C00B726DC /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,8 @@
 				C60D5B5E25ACE05300CF33EF /* EmojiArtDocument.swift */,
 				C66DC66D25BA1710000E6617 /* EmojiArtDocumentPalette.swift */,
 				C66DC66A25BA16E3000E6617 /* PaletteChooser.swift */,
+				C69B2D7625BCF93C00B726DC /* Grid.swift */,
+				C69B2D7525BCF93C00B726DC /* GridLayout.swift */,
 				C61027EE25B3C492005B3D51 /* AnimatableSystemFontModifier.swift */,
 				C60D5B4A25ACDBCC00CF33EF /* Assets.xcassets */,
 				C60D5B4F25ACDBCC00CF33EF /* Info.plist */,
@@ -172,6 +178,8 @@
 				C60D5B5925ACDDA400CF33EF /* EmojiArtExtensions.swift in Sources */,
 				C66DC66025B91FC0000E6617 /* Spinning.swift in Sources */,
 				C66DC66B25BA16E3000E6617 /* PaletteChooser.swift in Sources */,
+				C69B2D7725BCF93C00B726DC /* GridLayout.swift in Sources */,
+				C69B2D7825BCF93C00B726DC /* Grid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

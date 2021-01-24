@@ -50,6 +50,7 @@ struct EmojiArtDocumentView: View {
                     .onTapGesture {
                         document.deselectAllEmojis()
                     }
+                    .zIndex(-1)
                 
                 // emojis on screen
                 if isLoading {

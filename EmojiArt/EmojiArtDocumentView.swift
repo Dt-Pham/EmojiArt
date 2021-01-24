@@ -10,6 +10,8 @@ import SwiftUI
 struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     @State private var chosenPalette: String = ""
+    @State private var confirmBackgroundPaste = false
+    @State private var explainBackgroundPaste = false
     
     var body: some View {
         // emoij palette
@@ -33,7 +35,34 @@ struct EmojiArtDocumentView: View {
                 document.removeAllEmojis()
             }
         }
+        .navigationBarItems(trailing: Button(action: {
+            if let url = UIPasteboard.general.url, url != document.backgroundURL {
+                confirmBackgroundPaste = true
+            }
+            else {
+                explainBackgroundPaste = true
+            }
+        }, label: {
+            Image(systemName: "doc.on.clipboard").imageScale(.large)
+                .alert(isPresented: $explainBackgroundPaste) {
+                    Alert(
+                        title: Text("Paste Background"),
+                        message: Text("Copy the url of the image to the clipboard and touch this button to make it the background of the document"),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+        }))
         .padding()
+        .alert(isPresented: $confirmBackgroundPaste) {
+            Alert(
+                title: Text("Paste Background"),
+                message: Text("Replace your background with \(UIPasteboard.general.url?.absoluteString ?? "nothing")"),
+                primaryButton: .default(Text("OK")) {
+                    document.backgroundURL = UIPasteboard.general.url
+                },
+                secondaryButton: .cancel()
+            )
+        }
         
         // document view
         GeometryReader { geometry in

@@ -1,13 +1,13 @@
 //
-//  EmojiArtView.swift
-//  EmojiArtView
+//  EmojiArtDocumentView.swift
+//  EmojiArtDocumentView
 //
 //  Created by Duong Pham on 1/11/21.
 //
 
 import SwiftUI
 
-struct EmojiArtView: View {
+struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     @State private var chosenPalette: String = ""
     
